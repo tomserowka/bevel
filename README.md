@@ -55,10 +55,7 @@ Sound and feel:
 
 The pointer stays put while you slide an edge, stray clicks from tap-to-click are held back in corners, and a single tap in a corner still clicks as usual.
 
-### Coming in 0.3
-
-- **Draw on screen:** hold a shortcut to draw arrows, boxes, circles and numbered markers over everything, for calls and recordings. Let go and it's gone.
-- **Spotify volume:** while Spotify plays, volume slides reach the speaker or phone it plays on.
+**Draw on screen** (Settings › Draw on Screen): pick a shortcut, then hold it to point things out on screen, in a call or a recording. A toolbar at the top of the screen (or keys 1 to 5) picks arrow, pen, ellipse, rectangle or numbered markers, and the colour. Let go and it's gone. Prefer press-to-start? Switch it to press once to draw, again to clear.
 
 ## Install
 
