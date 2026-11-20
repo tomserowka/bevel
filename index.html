@@ -14,12 +14,17 @@
 <meta property="og:image:height" content="640">
 <meta property="og:url" content="https://tomserowka.github.io/bevel/">
 <meta property="og:type" content="website">
+<meta property="og:site_name" content="Bevel">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Bevel","operatingSystem":"macOS 13 or later","applicationCategory":"UtilitiesApplication","description":"Turns the edges and corners of the Mac trackpad and Magic Mouse into controls for brightness, volume, music and windows.","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"downloadUrl":"https://github.com/tomserowka/bevel/releases/latest","image":"https://tomserowka.github.io/bevel/icon-256.png","url":"https://tomserowka.github.io/bevel/"}
+</script>
 <meta name="twitter:card" content="summary_large_image">
-<link rel="icon" href="icon.png">
-<link rel="apple-touch-icon" href="icon.png">
+<link rel="icon" href="icon-128.png">
+<link rel="apple-touch-icon" href="icon-256.png">
+<link rel="canonical" href="https://tomserowka.github.io/bevel/">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
 /* The app's palette: midnight surfaces, one amber-rose-violet edge gradient, a white touch with a glow. */
 :root {
@@ -90,6 +95,27 @@ button { font: inherit; color: inherit; }
 .edge-light i::after { content: ""; position: absolute; top: -4px; width: 10px; height: 10px; border-radius: 50%; background: #fff; box-shadow: 0 0 10px 3px rgba(255,255,255,.8); }
 .edge-light.l i::after { left: -3px; }
 .edge-light.r i::after { right: -3px; }
+
+.vh { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+
+/* Skip link */
+.skip { position: absolute; left: 16px; top: -60px; z-index: 40; padding: 10px 16px; border-radius: 10px; background: var(--text); color: var(--midnight); font-weight: 600; text-decoration: none; transition: top .15s ease; }
+.skip:focus { top: 12px; }
+
+/* What's new */
+.news {
+  display: inline-flex; align-items: center; gap: 10px; margin: 0 0 22px; padding: 6px 14px 6px 6px; border-radius: 999px;
+  font-size: .88rem; color: var(--text-soft); text-decoration: none; background: rgba(233,236,246,.05);
+  box-shadow: inset 0 0 0 1px var(--hair); transition: box-shadow .2s ease, color .2s ease;
+}
+.news:hover { color: var(--text); box-shadow: inset 0 0 0 1px rgba(255,94,138,.6), var(--glow-soft); }
+.news b { padding: 3px 10px; border-radius: 999px; background: var(--neon); color: var(--midnight); font-weight: 600; }
+.news[hidden] { display: none; }
+
+/* Phones can't install a Mac app: offer to send the link instead. */
+.handoff { margin: 14px 0 0; }
+.handoff[hidden] { display: none; }
+.handoff button { min-height: 44px; padding: 8px 4px; border: 0; background: none; cursor: pointer; color: var(--text); font-weight: 600; text-decoration: underline; text-decoration-color: var(--rose); text-underline-offset: 4px; }
 
 /* Sticky bar */
 .bar {
@@ -234,7 +260,7 @@ h1 {
 .hud .row { display: flex; align-items: center; gap: 2cqw; }
 .hud svg { width: clamp(13px, 3.4cqw, 20px); height: clamp(13px, 3.4cqw, 20px); flex: none; }
 .hud .txt { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.hud .val { margin-left: auto; padding-left: 2cqw; opacity: .65; font-weight: 500; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.hud .val { margin-left: auto; padding-left: 2cqw; opacity: .65; font-weight: 400; font-variant-numeric: tabular-nums; white-space: nowrap; }
 .track { position: relative; height: max(5px, 1.3cqw); border-radius: 99px; margin-top: 1.8cqw; background: rgba(255,255,255,.16); }
 .screen:not(.dark) .track { background: rgba(0,0,0,.1); }
 .track i { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 99px; background: var(--neon); box-shadow: var(--glow-soft); }
@@ -423,6 +449,30 @@ h3 { font-size: 1.2rem; letter-spacing: -.01em; margin: 0 0 6px; line-height: 1.
 .mouse-row svg { width: 120px; flex: none; overflow: visible; }
 @media (max-width: 480px) { .mouse-row { flex-direction: column; align-items: flex-start; } }
 
+/* Compare */
+.compare { width: 100%; border-collapse: separate; border-spacing: 0; border-radius: 24px; overflow: hidden; background: var(--surface); box-shadow: inset 0 0 0 1px var(--hair); }
+.compare th, .compare td { padding: 18px 20px; text-align: left; vertical-align: top; border-bottom: 1px solid var(--hair); }
+.compare tr:last-child > * { border-bottom: 0; }
+.compare thead th { font-size: .9rem; font-weight: 600; color: var(--text-faint); background: rgba(9,10,24,.5); }
+.compare thead th:last-child { color: var(--text); }
+.compare tbody th { font-weight: 600; width: 30%; }
+.compare td { color: var(--text-soft); width: 35%; }
+.compare td:last-child { color: var(--text); background: linear-gradient(90deg, rgba(255,94,138,.07), rgba(138,108,255,.05)); }
+.compare .mark { display: flex; gap: 10px; align-items: flex-start; }
+.compare .mark svg { width: 20px; height: 20px; flex: none; margin-top: 2px; }
+.compare .no svg { color: var(--text-faint); }
+.compare .yes svg { color: var(--rose); filter: drop-shadow(0 0 6px rgba(255,94,138,.6)); }
+@media (max-width: 640px) {
+  .compare thead { display: none; }
+  .compare, .compare tbody, .compare tr, .compare th, .compare td { display: block; }
+  .compare tbody th, .compare td { width: auto; }
+  .compare tr { border-bottom: 1px solid var(--hair); padding: 6px 0; }
+  .compare tr:last-child { border-bottom: 0; }
+  .compare th, .compare td { border: 0; padding: 8px 18px; }
+  .compare tbody th { padding-top: 16px; }
+  .compare td:last-child { background: none; padding-bottom: 16px; }
+}
+
 /* Privacy */
 .private { margin-top: 120px; padding: 72px 0; position: relative; background: linear-gradient(180deg, transparent, rgba(42,47,107,.25), transparent); }
 .private::before, .private::after { content: ""; position: absolute; left: 0; right: 0; height: 1px; background: var(--neon); opacity: .55; box-shadow: var(--glow-soft); }
@@ -496,13 +546,14 @@ footer a:hover { color: var(--text); }
 </style>
 </head>
 <body>
+<a class="skip" href="#main">Skip to content</a>
 
 <div class="edge-light l" id="light-l" aria-hidden="true"><i></i></div>
 <div class="edge-light r" id="light-r" aria-hidden="true"><i></i></div>
 
 <div class="bar" id="bar" aria-hidden="true">
   <div class="wrap">
-    <a class="brand" href="#top" tabindex="-1"><img src="icon.png" alt="" width="30" height="30"><span>Bevel</span></a>
+    <a class="brand" href="#top" tabindex="-1"><img src="icon-128.png" alt="" width="30" height="30"><span>Bevel</span></a>
     <a class="btn btn-neon" data-dl href="https://github.com/tomserowka/bevel/releases/latest" tabindex="-1">Download for Mac</a>
   </div>
 </div>
@@ -510,7 +561,7 @@ footer a:hover { color: var(--text); }
 <header class="hero" id="top">
   <div class="wrap">
     <div class="top">
-      <a class="brand" href="#top"><img src="icon.png" alt="" width="34" height="34">Bevel</a>
+      <a class="brand" href="#top"><img src="icon-128.png" alt="" width="34" height="34">Bevel</a>
       <nav aria-label="Page">
         <a class="opt" href="#zones">Gestures</a>
         <a class="opt" href="#screens">Features</a>
@@ -521,6 +572,7 @@ footer a:hover { color: var(--text); }
 
     <div class="hero-main">
     <div class="hero-head">
+      <a class="news" id="news" hidden href="https://github.com/tomserowka/bevel/releases/latest"><b>New</b><span>What's new in this version</span></a>
       <h1>Your trackpad has edges. Put them to work.</h1>
       <span class="neon-rule" aria-hidden="true"></span>
       <p class="lede">Slide along an edge for the brightness of the screen you're looking at, or for volume. Swipe for the next track. Double-tap a corner for dark mode. The rest of the trackpad works exactly as before.</p>
@@ -535,6 +587,7 @@ footer a:hover { color: var(--text); }
         </a>
       </div>
       <p class="facts"><span data-ver>Free</span>. macOS 13 or later. Apple silicon and Intel.</p>
+      <p class="handoff" id="handoff" hidden><button type="button">On your phone? Send the link to your Mac</button></p>
     </div>
 
     <div class="stage">
@@ -578,7 +631,7 @@ footer a:hover { color: var(--text); }
   </div>
 </header>
 
-<main>
+<main id="main">
   <section id="zones">
     <div class="wrap">
       <h2>Four edges, four corners, no new keys to learn</h2>
@@ -716,13 +769,31 @@ footer a:hover { color: var(--text); }
           <ul class="ticks">
             <li><b>Maximise, restore or tile</b> the front window from a corner.</li>
             <li><b>App switcher on an edge.</b> Hold still to see your recent apps, slide to choose, lift to switch.</li>
-            <li><b>Seek</b> back or forward in the front app's player, or in Spotify and Music playing behind it.</li>
+            <li><b>Seek</b> back or forward in the front app's player.</li>
             <li><b>Sound output</b>: hold still on the volume edge, slide to your headphones, lift.</li>
             <li><b>Microphone mute</b> and <b>keyboard backlight</b>, for calls and late nights.</li>
             <li><b>Haptic ticks</b> as you slide, with a firmer one at halfway and at the ends.</li>
           </ul>
         </div>
       </div>
+    </div>
+  </section>
+
+  <section id="compare">
+    <div class="wrap">
+      <h2>What macOS leaves out</h2>
+      <p class="sub">The Mac's own controls stop at the keyboard and Apple's own screens. Bevel fills the gaps.</p>
+      <table class="compare">
+        <thead><tr><th scope="col"><span class="vh">Task</span></th><th scope="col">macOS on its own</th><th scope="col">With Bevel</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">Brightness of a third-party monitor</th><td><span class="mark no"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M8 12h8"/></svg><span><span class="vh">macOS: </span>Only with the monitor's own buttons</span></span></td><td><span class="mark yes"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><span><span class="vh">Bevel: </span>Slide an edge. Bevel talks to it over DDC/CI, or dims it in software</span></span></td></tr>
+          <tr><th scope="row">Dimmer than the lowest backlight</th><td><span class="mark no"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M8 12h8"/></svg><span><span class="vh">macOS: </span>Reduce White Point, deep in Accessibility settings</span></span></td><td><span class="mark yes"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><span><span class="vh">Bevel: </span>Keep sliding past the minimum</span></span></td></tr>
+          <tr><th scope="row">Warmth</th><td><span class="mark no"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M8 12h8"/></svg><span><span class="vh">macOS: </span>Night Shift warms every screen at once</span></span></td><td><span class="mark yes"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><span><span class="vh">Bevel: </span>Each screen on its own, with two fingers</span></span></td></tr>
+          <tr><th scope="row">Spotify playing on a speaker</th><td><span class="mark no"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M8 12h8"/></svg><span><span class="vh">macOS: </span>The volume keys change the Mac, not the speaker</span></span></td><td><span class="mark yes"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><span><span class="vh">Bevel: </span>The volume edge changes Spotify's own volume</span></span></td></tr>
+          <tr><th scope="row">Pointing things out in a call</th><td><span class="mark no"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M8 12h8"/></svg><span><span class="vh">macOS: </span>No drawing over the screen</span></span></td><td><span class="mark yes"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><span><span class="vh">Bevel: </span>Hold a key and draw. Let go and it's gone</span></span></td></tr>
+          <tr><th scope="row">Brightness, volume and music</th><td><span class="mark no"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M8 12h8"/></svg><span><span class="vh">macOS: </span>Keys along the top of the keyboard</span></span></td><td><span class="mark yes"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><span><span class="vh">Bevel: </span>The edge under your finger, on the trackpad or the Magic Mouse</span></span></td></tr>
+        </tbody>
+      </table>
     </div>
   </section>
 
@@ -791,7 +862,7 @@ footer a:hover { color: var(--text); }
   <div class="closing">
     <div class="wrap">
       <div class="closing-card">
-        <img src="icon.png" alt="" width="104" height="104">
+        <img src="icon-256.png" alt="" width="104" height="104" loading="lazy">
         <h2>Give your edges something to do</h2>
         <p>Bevel is free. If it earns a place in your menu bar, a star on GitHub helps other people find it.</p>
         <div class="ctas">
@@ -1175,6 +1246,19 @@ footer a:hover { color: var(--text); }
     bar.querySelectorAll("a").forEach(a => a.tabIndex = on ? 0 : -1);
   }).observe(document.querySelector(".hero-head .ctas"));
 
+  /* ---------- Phone visitors ---------- */
+  // iPads report a Mac user agent but have touch points.
+  const onMac = /Macintosh/.test(navigator.userAgent) && navigator.maxTouchPoints < 2;
+  if (!onMac) {
+    const handoff = $("handoff"), btn = handoff.querySelector("button");
+    handoff.hidden = false;
+    btn.addEventListener("click", () => {
+      const url = location.href.split("#")[0];
+      if (navigator.share) navigator.share({ title: "Bevel for Mac", url }).catch(() => {});
+      else navigator.clipboard?.writeText(url).then(() => { btn.textContent = "Link copied. Open it on your Mac"; });
+    });
+  }
+
   /* ---------- Latest release ---------- */
   fetch("https://api.github.com/repos/tomserowka/bevel/releases/latest")
     .then(r => r.ok ? r.json() : Promise.reject())
@@ -1186,6 +1270,10 @@ footer a:hover { color: var(--text); }
       }
       const v = rel.tag_name.replace(/^v/, "");
       document.querySelectorAll("[data-ver]").forEach(el => el.textContent = `Free. Version ${v}`);
+      const news = $("news");
+      news.href = rel.html_url;
+      news.lastChild.textContent = `What's new in ${v}`;
+      news.hidden = false;
     })
     .catch(() => {});
 })();
