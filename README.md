@@ -5,7 +5,7 @@
 <p align="center">The edges of your trackpad and Magic Mouse, put to work.<br>
 Brightness of the screen you're looking at, volume, windows, music and more, without reaching for a key.</p>
 
-<p align="center"><a href="../../releases/latest"><b>Download the latest release</b></a> · free · macOS 13+ · no network code, no tracking</p>
+<p align="center"><a href="../../releases/latest"><b>Download the latest release</b></a> · <a href="https://tomserowka.github.io/bevel/">Website</a> · free · macOS 13+ · no network code, no tracking</p>
 
 ---
 
