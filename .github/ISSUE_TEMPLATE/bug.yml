@@ -1,0 +1,26 @@
+name: Bug report
+description: Something doesn't work as it should
+labels: [bug]
+body:
+  - type: textarea
+    attributes:
+      label: What happened
+      description: What you did, what you expected and what happened instead.
+    validations:
+      required: true
+  - type: input
+    attributes:
+      label: Bevel version
+      placeholder: "0.2.0"
+    validations:
+      required: true
+  - type: input
+    attributes:
+      label: macOS version and Mac
+      placeholder: "macOS 26.1, MacBook Pro M3"
+    validations:
+      required: true
+  - type: input
+    attributes:
+      label: Device
+      description: Built-in trackpad, Magic Trackpad or Magic Mouse; for brightness, the monitor model.

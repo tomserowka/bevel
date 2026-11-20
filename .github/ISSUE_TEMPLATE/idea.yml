@@ -1,0 +1,9 @@
+name: Idea
+description: A gesture, action or setting you'd like
+labels: [enhancement]
+body:
+  - type: textarea
+    attributes:
+      label: What would you like Bevel to do?
+    validations:
+      required: true
