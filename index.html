@@ -414,17 +414,17 @@ h3 { font-size: 1.2rem; letter-spacing: -.01em; margin: 0 0 6px; line-height: 1.
 
 /* Draw: the app's toolbar, the selected tool filled with the neon gradient. */
 .draw-bar {
-  display: flex; flex-wrap: wrap; align-items: center; gap: 4px; padding: 6px; margin: 0 auto 12px; width: max-content; max-width: 100%;
+  display: flex; flex-wrap: wrap; align-items: center; gap: 2px; padding: 6px; margin: 0 auto 12px; width: max-content; max-width: 100%;
   border-radius: 20px; background: rgba(40,42,58,.75); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
   box-shadow: 0 8px 30px rgba(0,0,0,.4), inset 0 0 0 .5px rgba(255,255,255,.14); color: #fff;
 }
-.tool { width: 42px; height: 44px; border: 0; border-radius: 12px; background: none; display: grid; place-items: center; cursor: pointer; transition: background-color .15s ease, transform .1s ease; }
+.tool { width: 38px; height: 44px; border: 0; border-radius: 12px; background: none; display: grid; place-items: center; cursor: pointer; transition: background-color .15s ease, transform .1s ease; }
 .tool:active { transform: scale(.94); }
 .tool svg { width: 20px; height: 20px; }
 .tool:hover { background: rgba(255,255,255,.1); }
 .tool[aria-pressed="true"] { background: var(--neon); color: #fff; box-shadow: 0 4px 14px rgba(255,94,138,.45); }
 .sep { width: 1px; height: 26px; background: rgba(255,255,255,.18); margin: 0 3px; }
-.swatch { width: 34px; height: 44px; border: 0; background: none; display: grid; place-items: center; cursor: pointer; border-radius: 10px; }
+.swatch { width: 30px; height: 44px; border: 0; background: none; display: grid; place-items: center; cursor: pointer; border-radius: 10px; }
 .swatch::before { content: ""; width: 22px; height: 22px; border-radius: 50%; background: var(--c); }
 .swatch[aria-pressed="true"]::before { box-shadow: 0 0 0 2px #2a2c3c, 0 0 0 3.5px var(--c); }
 .clear { border: 0; border-radius: 12px; background: none; color: #fff; padding: 0 12px; height: 44px; cursor: pointer; font-weight: 600; font-size: .92rem; }
@@ -624,15 +624,22 @@ h2 { font-size: clamp(2.1rem, 5vw, 3.6rem); letter-spacing: -.04em; line-height:
 .checks { margin: 0; padding: 0; list-style: none; display: flex; flex-wrap: wrap; gap: 10px; }
 .checks li { display: flex; gap: 8px; align-items: center; font-weight: 600; font-size: .95rem; padding: 8px 14px 8px 10px; border-radius: 999px; background: rgba(255,255,255,.05); box-shadow: inset 0 0 0 1px rgba(255,255,255,.1); }
 .checks svg { width: 18px; height: 18px; flex: none; color: var(--rose); filter: drop-shadow(0 0 6px rgba(255,94,138,.6)); }
+.notch-demo { display: flex; justify-content: center; margin: -28px 0 22px; }
+.notch { display: flex; align-items: center; gap: 10px; width: min(250px, 80%); padding: 12px 18px 14px; border-radius: 0 0 22px 22px; background: #000; color: #fff; box-shadow: 0 16px 40px -14px rgba(255,94,138,.55); }
+.notch svg { width: 18px; height: 18px; flex: none; }
+.notch i { position: relative; flex: 1; height: 6px; border-radius: 3px; background: rgba(255,255,255,.14); }
+.notch i::before { content: ""; position: absolute; inset: 0 30% 0 0; border-radius: inherit; background: var(--neon); box-shadow: var(--glow-soft); }
+.notch i::after { content: ""; position: absolute; left: 70%; top: 50%; width: 10px; height: 10px; margin: -5px 0 0 -5px; border-radius: 50%; background: #fff; box-shadow: 0 0 8px 2px rgba(255,255,255,.8); }
+.t-glow { overflow: hidden; border-left-color: transparent; }
 .mouse-row { display: flex; gap: 28px; align-items: center; }
 .mouse-row svg { width: 120px; flex: none; overflow: visible; }
 @media (max-width: 480px) { .mouse-row { flex-direction: column; align-items: flex-start; } }
 @media (min-width: 720px) {
-  .bento { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-areas: "mouse mouse" "s1 s2" "win win" "priv priv"; }
-  .t-mouse { grid-area: mouse; } .t-stat:nth-of-type(2) { grid-area: s1; } .t-stat:nth-of-type(3) { grid-area: s2; } .t-win { grid-area: win; } .t-priv { grid-area: priv; }
+  .bento { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-areas: "mouse mouse" "s1 s2" "win win" "glow glow" "priv priv"; }
+  .t-mouse { grid-area: mouse; } .t-stat:nth-of-type(2) { grid-area: s1; } .t-stat:nth-of-type(3) { grid-area: s2; } .t-win { grid-area: win; } .t-glow { grid-area: glow; } .t-priv { grid-area: priv; }
 }
 @media (min-width: 1040px) {
-  .bento { grid-template-columns: repeat(4, minmax(0, 1fr)); grid-template-areas: "mouse mouse s1 s2" "mouse mouse win win" "priv priv win win"; }
+  .bento { grid-template-columns: repeat(4, minmax(0, 1fr)); grid-template-areas: "mouse mouse s1 s2" "mouse mouse win win" "glow glow win win" "priv priv priv priv"; }
 }
 
 /* Lists and cards */
@@ -788,7 +795,7 @@ h2 { font-size: clamp(2.1rem, 5vw, 3.6rem); letter-spacing: -.04em; line-height:
   </div>
 </header>
 
-<div class="ticker-clip" aria-hidden="true"><div class="ticker"><div class="ticker-track"><span>Brightness</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1.5c.6 5.6 4.9 9.9 10.5 10.5-5.6.6-9.9 4.9-10.5 10.5C11.4 16.9 7.1 12.6 1.5 12 7.1 11.4 11.4 7.1 12 1.5z"/></svg><span>Volume</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1.5c.6 5.6 4.9 9.9 10.5 10.5-5.6.6-9.9 4.9-10.5 10.5C11.4 16.9 7.1 12.6 1.5 12 7.1 11.4 11.4 7.1 12 1.5z"/></svg><span>Next track</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1.5c.6 5.6 4.9 9.9 10.5 10.5-5.6.6-9.9 4.9-10.5 10.5C11.4 16.9 7.1 12.6 1.5 12 7.1 11.4 11.4 7.1 12 1.5z"/></svg><span>Dark mode</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1.5c.6 5.6 4.9 9.9 10.5 10.5-5.6.6-9.9 4.9-10.5 10.5C11.4 16.9 7.1 12.6 1.5 12 7.1 11.4 11.4 7.1 12 1.5z"/></svg><span>Lock screen</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1.5c.6 5.6 4.9 9.9 10.5 10.5-5.6.6-9.9 4.9-10.5 10.5C11.4 16.9 7.1 12.6 1.5 12 7.1 11.4 11.4 7.1 12 1.5z"/></svg><span>Mute</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1.5c.6 5.6 4.9 9.9 10.5 10.5-5.6.6-9.9 4.9-10.5 10.5C11.4 16.9 7.1 12.6 1.5 12 7.1 11.4 11.4 7.1 12 1.5z"/></svg><span>Draw on screen</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1.5c.6 5.6 4.9 9.9 10.5 10.5-5.6.6-9.9 4.9-10.5 10.5C11.4 16.9 7.1 12.6 1.5 12 7.1 11.4 11.4 7.1 12 1.5z"/></svg><span>Tile windows</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1.5c.6 5.6 4.9 9.9 10.5 10.5-5.6.6-9.9 4.9-10.5 10.5C11.4 16.9 7.1 12.6 1.5 12 7.1 11.4 11.4 7.1 12 1.5z"/></svg><span>App switcher</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1.5c.6 5.6 4.9 9.9 10.5 10.5-5.6.6-9.9 4.9-10.5 10.5C11.4 16.9 7.1 12.6 1.5 12 7.1 11.4 11.4 7.1 12 1.5z"/></svg><span>Sound output</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1.5c.6 5.6 4.9 9.9 10.5 10.5-5.6.6-9.9 4.9-10.5 10.5C11.4 16.9 7.1 12.6 1.5 12 7.1 11.4 11.4 7.1 12 1.5z"/></svg><span>Warmth</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1.5c.6 5.6 4.9 9.9 10.5 10.5-5.6.6-9.9 4.9-10.5 10.5C11.4 16.9 7.1 12.6 1.5 12 7.1 11.4 11.4 7.1 12 1.5z"/></svg><span>Magic Mouse</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1.5c.6 5.6 4.9 9.9 10.5 10.5-5.6.6-9.9 4.9-10.5 10.5C11.4 16.9 7.1 12.6 1.5 12 7.1 11.4 11.4 7.1 12 1.5z"/></svg><span>Brightness</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1.5c.6 5.6 4.9 9.9 10.5 10.5-5.6.6-9.9 4.9-10.5 10.5C11.4 16.9 7.1 12.6 1.5 12 7.1 11.4 11.4 7.1 12 1.5z"/></svg><span>Volume</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1.5c.6 5.6 4.9 9.9 10.5 10.5-5.6.6-9.9 4.9-10.5 10.5C11.4 16.9 7.1 12.6 1.5 12 7.1 11.4 11.4 7.1 12 1.5z"/></svg><span>Next track</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1.5c.6 5.6 4.9 9.9 10.5 10.5-5.6.6-9.9 4.9-10.5 10.5C11.4 16.9 7.1 12.6 1.5 12 7.1 11.4 11.4 7.1 12 1.5z"/></svg><span>Dark mode</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1.5c.6 5.6 4.9 9.9 10.5 10.5-5.6.6-9.9 4.9-10.5 10.5C11.4 16.9 7.1 12.6 1.5 12 7.1 11.4 11.4 7.1 12 1.5z"/></svg><span>Lock screen</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1.5c.6 5.6 4.9 9.9 10.5 10.5-5.6.6-9.9 4.9-10.5 10.5C11.4 16.9 7.1 12.6 1.5 12 7.1 11.4 11.4 7.1 12 1.5z"/></svg><span>Mute</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1.5c.6 5.6 4.9 9.9 10.5 10.5-5.6.6-9.9 4.9-10.5 10.5C11.4 16.9 7.1 12.6 1.5 12 7.1 11.4 11.4 7.1 12 1.5z"/></svg><span>Draw on screen</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1.5c.6 5.6 4.9 9.9 10.5 10.5-5.6.6-9.9 4.9-10.5 10.5C11.4 16.9 7.1 12.6 1.5 12 7.1 11.4 11.4 7.1 12 1.5z"/></svg><span>Tile windows</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1.5c.6 5.6 4.9 9.9 10.5 10.5-5.6.6-9.9 4.9-10.5 10.5C11.4 16.9 7.1 12.6 1.5 12 7.1 11.4 11.4 7.1 12 1.5z"/></svg><span>App switcher</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1.5c.6 5.6 4.9 9.9 10.5 10.5-5.6.6-9.9 4.9-10.5 10.5C11.4 16.9 7.1 12.6 1.5 12 7.1 11.4 11.4 7.1 12 1.5z"/></svg><span>Sound output</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1.5c.6 5.6 4.9 9.9 10.5 10.5-5.6.6-9.9 4.9-10.5 10.5C11.4 16.9 7.1 12.6 1.5 12 7.1 11.4 11.4 7.1 12 1.5z"/></svg><span>Warmth</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1.5c.6 5.6 4.9 9.9 10.5 10.5-5.6.6-9.9 4.9-10.5 10.5C11.4 16.9 7.1 12.6 1.5 12 7.1 11.4 11.4 7.1 12 1.5z"/></svg><span>Magic Mouse</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1.5c.6 5.6 4.9 9.9 10.5 10.5-5.6.6-9.9 4.9-10.5 10.5C11.4 16.9 7.1 12.6 1.5 12 7.1 11.4 11.4 7.1 12 1.5z"/></svg></div></div></div>
+<div class="ticker-clip" aria-hidden="true"><div class="ticker"><div class="ticker-track"><span>Brightness</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1.5c.6 5.6 4.9 9.9 10.5 10.5-5.6.6-9.9 4.9-10.5 10.5C11.4 16.9 7.1 12.6 1.5 12 7.1 11.4 11.4 7.1 12 1.5z"/></svg><span>Volume</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1.5c.6 5.6 4.9 9.9 10.5 10.5-5.6.6-9.9 4.9-10.5 10.5C11.4 16.9 7.1 12.6 1.5 12 7.1 11.4 11.4 7.1 12 1.5z"/></svg><span>Next track</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1.5c.6 5.6 4.9 9.9 10.5 10.5-5.6.6-9.9 4.9-10.5 10.5C11.4 16.9 7.1 12.6 1.5 12 7.1 11.4 11.4 7.1 12 1.5z"/></svg><span>Dark mode</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1.5c.6 5.6 4.9 9.9 10.5 10.5-5.6.6-9.9 4.9-10.5 10.5C11.4 16.9 7.1 12.6 1.5 12 7.1 11.4 11.4 7.1 12 1.5z"/></svg><span>Lock screen</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1.5c.6 5.6 4.9 9.9 10.5 10.5-5.6.6-9.9 4.9-10.5 10.5C11.4 16.9 7.1 12.6 1.5 12 7.1 11.4 11.4 7.1 12 1.5z"/></svg><span>Mute</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1.5c.6 5.6 4.9 9.9 10.5 10.5-5.6.6-9.9 4.9-10.5 10.5C11.4 16.9 7.1 12.6 1.5 12 7.1 11.4 11.4 7.1 12 1.5z"/></svg><span>Draw on screen</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1.5c.6 5.6 4.9 9.9 10.5 10.5-5.6.6-9.9 4.9-10.5 10.5C11.4 16.9 7.1 12.6 1.5 12 7.1 11.4 11.4 7.1 12 1.5z"/></svg><span>Neon ink</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1.5c.6 5.6 4.9 9.9 10.5 10.5-5.6.6-9.9 4.9-10.5 10.5C11.4 16.9 7.1 12.6 1.5 12 7.1 11.4 11.4 7.1 12 1.5z"/></svg><span>Spotlight</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1.5c.6 5.6 4.9 9.9 10.5 10.5-5.6.6-9.9 4.9-10.5 10.5C11.4 16.9 7.1 12.6 1.5 12 7.1 11.4 11.4 7.1 12 1.5z"/></svg><span>Seek</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1.5c.6 5.6 4.9 9.9 10.5 10.5-5.6.6-9.9 4.9-10.5 10.5C11.4 16.9 7.1 12.6 1.5 12 7.1 11.4 11.4 7.1 12 1.5z"/></svg><span>Tile windows</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1.5c.6 5.6 4.9 9.9 10.5 10.5-5.6.6-9.9 4.9-10.5 10.5C11.4 16.9 7.1 12.6 1.5 12 7.1 11.4 11.4 7.1 12 1.5z"/></svg><span>App switcher</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1.5c.6 5.6 4.9 9.9 10.5 10.5-5.6.6-9.9 4.9-10.5 10.5C11.4 16.9 7.1 12.6 1.5 12 7.1 11.4 11.4 7.1 12 1.5z"/></svg><span>Sound output</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1.5c.6 5.6 4.9 9.9 10.5 10.5-5.6.6-9.9 4.9-10.5 10.5C11.4 16.9 7.1 12.6 1.5 12 7.1 11.4 11.4 7.1 12 1.5z"/></svg><span>Warmth</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1.5c.6 5.6 4.9 9.9 10.5 10.5-5.6.6-9.9 4.9-10.5 10.5C11.4 16.9 7.1 12.6 1.5 12 7.1 11.4 11.4 7.1 12 1.5z"/></svg><span>Magic Mouse</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1.5c.6 5.6 4.9 9.9 10.5 10.5-5.6.6-9.9 4.9-10.5 10.5C11.4 16.9 7.1 12.6 1.5 12 7.1 11.4 11.4 7.1 12 1.5z"/></svg><span>Brightness</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1.5c.6 5.6 4.9 9.9 10.5 10.5-5.6.6-9.9 4.9-10.5 10.5C11.4 16.9 7.1 12.6 1.5 12 7.1 11.4 11.4 7.1 12 1.5z"/></svg><span>Volume</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1.5c.6 5.6 4.9 9.9 10.5 10.5-5.6.6-9.9 4.9-10.5 10.5C11.4 16.9 7.1 12.6 1.5 12 7.1 11.4 11.4 7.1 12 1.5z"/></svg><span>Next track</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1.5c.6 5.6 4.9 9.9 10.5 10.5-5.6.6-9.9 4.9-10.5 10.5C11.4 16.9 7.1 12.6 1.5 12 7.1 11.4 11.4 7.1 12 1.5z"/></svg><span>Dark mode</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1.5c.6 5.6 4.9 9.9 10.5 10.5-5.6.6-9.9 4.9-10.5 10.5C11.4 16.9 7.1 12.6 1.5 12 7.1 11.4 11.4 7.1 12 1.5z"/></svg><span>Lock screen</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1.5c.6 5.6 4.9 9.9 10.5 10.5-5.6.6-9.9 4.9-10.5 10.5C11.4 16.9 7.1 12.6 1.5 12 7.1 11.4 11.4 7.1 12 1.5z"/></svg><span>Mute</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1.5c.6 5.6 4.9 9.9 10.5 10.5-5.6.6-9.9 4.9-10.5 10.5C11.4 16.9 7.1 12.6 1.5 12 7.1 11.4 11.4 7.1 12 1.5z"/></svg><span>Draw on screen</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1.5c.6 5.6 4.9 9.9 10.5 10.5-5.6.6-9.9 4.9-10.5 10.5C11.4 16.9 7.1 12.6 1.5 12 7.1 11.4 11.4 7.1 12 1.5z"/></svg><span>Neon ink</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1.5c.6 5.6 4.9 9.9 10.5 10.5-5.6.6-9.9 4.9-10.5 10.5C11.4 16.9 7.1 12.6 1.5 12 7.1 11.4 11.4 7.1 12 1.5z"/></svg><span>Spotlight</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1.5c.6 5.6 4.9 9.9 10.5 10.5-5.6.6-9.9 4.9-10.5 10.5C11.4 16.9 7.1 12.6 1.5 12 7.1 11.4 11.4 7.1 12 1.5z"/></svg><span>Seek</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1.5c.6 5.6 4.9 9.9 10.5 10.5-5.6.6-9.9 4.9-10.5 10.5C11.4 16.9 7.1 12.6 1.5 12 7.1 11.4 11.4 7.1 12 1.5z"/></svg><span>Tile windows</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1.5c.6 5.6 4.9 9.9 10.5 10.5-5.6.6-9.9 4.9-10.5 10.5C11.4 16.9 7.1 12.6 1.5 12 7.1 11.4 11.4 7.1 12 1.5z"/></svg><span>App switcher</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1.5c.6 5.6 4.9 9.9 10.5 10.5-5.6.6-9.9 4.9-10.5 10.5C11.4 16.9 7.1 12.6 1.5 12 7.1 11.4 11.4 7.1 12 1.5z"/></svg><span>Sound output</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1.5c.6 5.6 4.9 9.9 10.5 10.5-5.6.6-9.9 4.9-10.5 10.5C11.4 16.9 7.1 12.6 1.5 12 7.1 11.4 11.4 7.1 12 1.5z"/></svg><span>Warmth</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1.5c.6 5.6 4.9 9.9 10.5 10.5-5.6.6-9.9 4.9-10.5 10.5C11.4 16.9 7.1 12.6 1.5 12 7.1 11.4 11.4 7.1 12 1.5z"/></svg><span>Magic Mouse</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1.5c.6 5.6 4.9 9.9 10.5 10.5-5.6.6-9.9 4.9-10.5 10.5C11.4 16.9 7.1 12.6 1.5 12 7.1 11.4 11.4 7.1 12 1.5z"/></svg></div></div></div>
 
 <main id="main">
   <section id="zones">
@@ -854,9 +861,10 @@ h2 { font-size: clamp(2.1rem, 5vw, 3.6rem); letter-spacing: -.04em; line-height:
       <h2>Point things out, right on the screen</h2>
         <p class="sub">Hold a shortcut and draw over anything, in a call or a recording. Let go and it's gone.</p>
         <ul class="ticks">
-          <li><b>Arrow, pen, ellipse, rectangle and numbered markers</b>, from the toolbar or the keys 1 to 5.</li>
-          <li><b>Shift, Option and Command</b> while dragging switch to arrow, ellipse and rectangle.</li>
-          <li><b>Click to number</b> the steps: 1, 2, 3.</li>
+          <li><b>Arrow, pen, ellipse, rectangle, numbers and a highlighter</b>, from the toolbar or the keys 1 to 6, in three line sizes.</li>
+          <li><b>Neon ink.</b> Press N and every mark glows like a tube light.</li>
+          <li><b>Spotlight</b> (7) dims everything but a circle round the pointer. <b>W</b> turns the screen into a whiteboard.</li>
+          <li><b>Undo</b> with Z, <b>clear</b> with C and keep going, or switch on <b>fading ink</b> so marks vanish by themselves.</li>
           <li><b>Prefer a toggle?</b> Press once to draw, again to clear.</li>
         </ul>
       </div>
@@ -868,15 +876,18 @@ h2 { font-size: clamp(2.1rem, 5vw, 3.6rem); letter-spacing: -.04em; line-height:
             <button class="tool" data-tool="ellipse" aria-pressed="false" aria-label="Ellipse (3)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><ellipse cx="12" cy="12" rx="9" ry="7"/></svg></button>
             <button class="tool" data-tool="rect" aria-pressed="false" aria-label="Rectangle (4)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="6" width="18" height="12" rx="1.5"/></svg></button>
             <button class="tool" data-tool="num" aria-pressed="false" aria-label="Numbers (5)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M10.5 9l2-1.5V16"/></svg></button>
+            <button class="tool" data-tool="hl" aria-pressed="false" aria-label="Highlighter (6)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 4.5l5 5L10 19H5v-5z"/><path d="M4 21h16" opacity=".5"/></svg></button>
             <span class="sep" aria-hidden="true"></span>
             <button class="swatch" data-color="#ff3b30" style="--c:#ff3b30" aria-pressed="true" aria-label="Red"></button>
             <button class="swatch" data-color="#ffcc00" style="--c:#ffcc00" aria-pressed="false" aria-label="Yellow"></button>
             <button class="swatch" data-color="#34c759" style="--c:#34c759" aria-pressed="false" aria-label="Green"></button>
             <button class="swatch" data-color="#007aff" style="--c:#007aff" aria-pressed="false" aria-label="Blue"></button>
             <span class="sep" aria-hidden="true"></span>
+            <button class="tool" id="neon" aria-pressed="false" aria-label="Neon ink (N)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M5.6 18.4l2.1-2.1M16.3 7.7l2.1-2.1"/><circle cx="12" cy="12" r="2.5"/></svg></button>
+            <button class="tool" id="undo" aria-label="Undo (Z)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 14L4 9l5-5"/><path d="M4 9h10a6 6 0 0 1 0 12h-3"/></svg></button>
             <button class="clear" id="clear">Clear</button>
           </div>
-          <div class="draw-stage" id="draw-stage" tabindex="0" aria-label="Drawing area. Keys 1 to 5 pick a tool, Escape clears.">
+          <div class="draw-stage" id="draw-stage" tabindex="0" aria-label="Drawing area. Keys 1 to 6 pick a tool, N switches neon ink, Z undoes, Escape clears.">
             <div class="slide" aria-hidden="true">
               <b>Weekly sign-ups</b>
               <small>Last four weeks</small>
@@ -886,7 +897,7 @@ h2 { font-size: clamp(2.1rem, 5vw, 3.6rem); letter-spacing: -.04em; line-height:
             <canvas id="canvas"></canvas>
           </div>
         </div>
-        <p class="demo-label">Draw on the slide. Escape clears, like letting go of the shortcut.</p>
+        <p class="demo-label">Draw on the slide, then try neon ink. Z undoes, Escape clears like letting go of the shortcut.</p>
       </div>
     </div>
   </section>
@@ -945,6 +956,11 @@ h2 { font-size: clamp(2.1rem, 5vw, 3.6rem); letter-spacing: -.04em; line-height:
             <li><b>Microphone mute</b> and <b>keyboard backlight</b>, for calls and late nights.</li>
             <li><b>Haptic ticks</b> as you slide, with a firmer one at halfway and at the ends.</li>
           </ul>
+        </div>
+        <div class="tile t-glow">
+          <div class="notch-demo" aria-hidden="true"><span class="notch"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg><i></i></span></div>
+          <h3>Lights up as you slide</h3>
+          <p>The edge of the screen glows and fills to the level, like this page's edges when you tried the demo. On a MacBook with a notch, the display grows out of the notch.</p>
         </div>
         <div class="tile t-priv">
           <h3>It never talks to the internet.</h3>
@@ -1011,7 +1027,7 @@ h2 { font-size: clamp(2.1rem, 5vw, 3.6rem); letter-spacing: -.04em; line-height:
       </details>
       <details>
         <summary>Which permissions does it ask for?</summary>
-        <p>Accessibility, so the pointer stays still while you slide and windows can be moved. Bevel works without it, with fewer features. The dark mode corner and Spotify volume ask for Automation the first time you use them.</p>
+        <p>Accessibility, so the pointer stays still while you slide and windows can be moved. Bevel works without it, with fewer features. The dark mode corner and the Spotify and Music controls ask for Automation the first time you use them.</p>
       </details>
       <details>
         <summary>Can I change what each edge and corner does?</summary>
@@ -1312,7 +1328,7 @@ h2 { font-size: clamp(2.1rem, 5vw, 3.6rem); letter-spacing: -.04em; line-height:
   /* ---------- Draw ---------- */
   const stage = $("draw-stage"), canvas = $("canvas"), ctx = canvas.getContext("2d");
   const shapes = [];
-  let tool = "arrow", color = "#ff3b30", current = null;
+  let tool = "arrow", color = "#ff3b30", current = null, neon = false;
   function size() {
     const r = stage.getBoundingClientRect(), dpr = devicePixelRatio || 1;
     canvas.width = r.width * dpr; canvas.height = r.height * dpr;
@@ -1337,35 +1353,55 @@ h2 { font-size: clamp(2.1rem, 5vw, 3.6rem); letter-spacing: -.04em; line-height:
     ctx.closePath();
     ctx.fill();
   }
+  function drawMark(s, w, h, lw) {
+    const [a, b] = [s.pts[0], s.pts[s.pts.length - 1]];
+    const ax = a[0] * w, ay = a[1] * h, bx = b[0] * w, by = b[1] * h;
+    ctx.beginPath();
+    if (s.tool === "pen" || s.tool === "hl") {
+      s.pts.forEach(([x, y], i) => i ? ctx.lineTo(x * w, y * h) : ctx.moveTo(x * w, y * h));
+      ctx.stroke();
+    } else if (s.tool === "arrow") {
+      arrow(ax, ay, bx, by, lw);
+    } else if (s.tool === "ellipse") {
+      ctx.ellipse((ax + bx) / 2, (ay + by) / 2, Math.abs(bx - ax) / 2, Math.abs(by - ay) / 2, 0, 0, Math.PI * 2);
+      ctx.stroke();
+    } else if (s.tool === "rect") {
+      ctx.strokeRect(ax, ay, bx - ax, by - ay);
+    } else if (s.tool === "num") {
+      const rad = lw * 5;
+      ctx.arc(ax, ay, rad, 0, Math.PI * 2); ctx.fill();
+      ctx.shadowColor = "transparent";
+      ctx.fillStyle = s.color === "#ffcc00" ? "#000" : "#fff";
+      ctx.font = `700 ${rad * 1.15}px "Poppins", system-ui, sans-serif`;
+      ctx.textAlign = "center"; ctx.textBaseline = "middle";
+      ctx.fillText(s.n, ax, ay + rad * .05);
+    }
+  }
   function render() {
     const w = canvas.width, h = canvas.height, lw = Math.max(3, w / 180);
     ctx.clearRect(0, 0, w, h);
-    ctx.lineCap = "round"; ctx.lineJoin = "round"; ctx.lineWidth = lw;
+    ctx.lineCap = "round"; ctx.lineJoin = "round";
     for (const s of current ? [...shapes, current] : shapes) {
-      ctx.shadowColor = "rgba(0,0,0,.25)"; ctx.shadowBlur = lw * 1.2; ctx.shadowOffsetY = lw * .3;
+      ctx.save();
       ctx.strokeStyle = ctx.fillStyle = s.color;
-      const [a, b] = [s.pts[0], s.pts[s.pts.length - 1]];
-      const ax = a[0] * w, ay = a[1] * h, bx = b[0] * w, by = b[1] * h;
-      ctx.beginPath();
-      if (s.tool === "pen") {
-        s.pts.forEach(([x, y], i) => i ? ctx.lineTo(x * w, y * h) : ctx.moveTo(x * w, y * h));
-        ctx.stroke();
-      } else if (s.tool === "arrow") {
-        arrow(ax, ay, bx, by, lw);
-      } else if (s.tool === "ellipse") {
-        ctx.ellipse((ax + bx) / 2, (ay + by) / 2, Math.abs(bx - ax) / 2, Math.abs(by - ay) / 2, 0, 0, Math.PI * 2);
-        ctx.stroke();
-      } else if (s.tool === "rect") {
-        ctx.strokeRect(ax, ay, bx - ax, by - ay);
-      } else if (s.tool === "num") {
-        const rad = lw * 5;
-        ctx.arc(ax, ay, rad, 0, Math.PI * 2); ctx.fill();
-        ctx.shadowColor = "transparent";
-        ctx.fillStyle = s.color === "#ffcc00" ? "#000" : "#fff";
-        ctx.font = `700 ${rad * 1.15}px "Poppins", system-ui, sans-serif`;
-        ctx.textAlign = "center"; ctx.textBaseline = "middle";
-        ctx.fillText(s.n, ax, ay + rad * .05);
+      if (s.tool === "hl") {
+        // The highlighter is wide and see-through, with no shadow, like a marker on paper.
+        ctx.globalAlpha = .38; ctx.lineWidth = lw * 5; ctx.lineCap = "butt";
+        drawMark(s, w, h, lw);
+      } else if (s.neon && s.tool !== "num") {
+        // Neon: a coloured glow, then a pale core drawn thinner on top, like a tube light.
+        ctx.shadowColor = s.color; ctx.shadowBlur = lw * 5; ctx.lineWidth = lw * 1.4;
+        drawMark(s, w, h, lw * 1.15);
+        ctx.shadowBlur = lw * 2; ctx.lineWidth = lw * .55;
+        ctx.strokeStyle = ctx.fillStyle = "rgba(255,255,255,.85)";
+        drawMark(s, w, h, lw * .5);
+      } else {
+        if (s.neon) { ctx.shadowColor = s.color; ctx.shadowBlur = lw * 5; }
+        else { ctx.shadowColor = "rgba(0,0,0,.25)"; ctx.shadowBlur = lw * 1.2; ctx.shadowOffsetY = lw * .3; }
+        ctx.lineWidth = lw;
+        drawMark(s, w, h, lw);
       }
+      ctx.restore();
     }
   }
   const pos = e => { const r = stage.getBoundingClientRect(); return [(e.clientX - r.left) / r.width, (e.clientY - r.top) / r.height]; };
@@ -1379,14 +1415,14 @@ h2 { font-size: clamp(2.1rem, 5vw, 3.6rem); letter-spacing: -.04em; line-height:
     canvas.setPointerCapture(e.pointerId);
     const t = activeTool(e), p = pos(e);
     if (t === "num") {
-      shapes.push({ tool: t, color, pts: [p], n: shapes.filter(s => s.tool === "num").length + 1 });
+      shapes.push({ tool: t, color, neon, pts: [p], n: shapes.filter(s => s.tool === "num").length + 1 });
       render(); return;
     }
-    current = { tool: t, color, pts: [p, p] };
+    current = { tool: t, color, neon, pts: [p, p] };
   });
   canvas.addEventListener("pointermove", e => {
     if (!current) return;
-    if (current.tool === "pen") current.pts.push(pos(e)); else current.pts[1] = pos(e);
+    if (current.tool === "pen" || current.tool === "hl") current.pts.push(pos(e)); else current.pts[1] = pos(e);
     render();
   });
   const finish = () => { if (current) { shapes.push(current); current = null; render(); } };
@@ -1394,15 +1430,22 @@ h2 { font-size: clamp(2.1rem, 5vw, 3.6rem); letter-spacing: -.04em; line-height:
   canvas.addEventListener("pointercancel", finish);
   const clearAll = () => { shapes.length = 0; current = null; render(); };
   $("clear").addEventListener("click", clearAll);
-  const tools = [...document.querySelectorAll(".tool")];
+  const undo = () => { shapes.pop(); render(); };
+  $("undo").addEventListener("click", undo);
+  const neonBtn = $("neon");
+  const toggleNeon = () => { neon = !neon; neonBtn.setAttribute("aria-pressed", neon); };
+  neonBtn.addEventListener("click", toggleNeon);
+  const tools = [...document.querySelectorAll(".tool[data-tool]")];
   function setTool(t) { tool = t; tools.forEach(b => b.setAttribute("aria-pressed", b.dataset.tool === t)); }
   tools.forEach(b => b.addEventListener("click", () => setTool(b.dataset.tool)));
   document.querySelectorAll(".swatch").forEach((b, _, all) => b.addEventListener("click", () => {
     color = b.dataset.color; all.forEach(x => x.setAttribute("aria-pressed", x === b));
   }));
   stage.addEventListener("keydown", e => {
-    if (e.key >= "1" && e.key <= "5") setTool(tools[e.key - 1].dataset.tool);
-    if (e.key === "Escape") clearAll();
+    if (e.key >= "1" && e.key <= "6") setTool(tools[e.key - 1].dataset.tool);
+    if (e.key === "z" || e.key === "Z") { e.preventDefault(); undo(); }
+    if (e.key === "n" || e.key === "N") toggleNeon();
+    if (e.key === "c" || e.key === "C" || e.key === "Escape") clearAll();
   });
   new ResizeObserver(size).observe(stage);
 
