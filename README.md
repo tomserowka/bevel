@@ -56,7 +56,7 @@ Sound and feel:
 Look:
 
 - **The edge lights up.** While you slide a level, the matching edge of the screen glows and fills to it, in the icon's amber-to-violet.
-- **Out of the notch.** On a MacBook with a notch, the on-screen display grows out of it. Both can be turned off in Settings.
+- **Out of the notch.** On a MacBook with a notch, the on-screen display grows out of it; on other screens it springs from the top as an island. Both can be turned off in Settings.
 
 The pointer stays put while you slide an edge, stray clicks from tap-to-click are held back in corners, and a single tap in a corner still clicks as usual.
 
