@@ -16,7 +16,7 @@ Slide a finger along an edge, or double-tap a corner, of the built-in trackpad, 
 | Where | Gesture | Default |
 | --- | --- | --- |
 | Left edge | slide | Brightness of the screen **under the pointer**. Keep going down to dim below the screen's minimum. Two fingers: warmth. |
-| Right edge | slide | Volume. Hold your finger still to pick the sound output, slide to choose, lift to switch. |
+| Right edge | slide | Volume: of Spotify while it plays, on whichever device it plays on; otherwise of the Mac. Hold your finger still to pick the sound output, slide to choose, lift to switch. |
 | Top edge | swipe | Move the front window to the next screen. |
 | Bottom edge | swipe | Next track (right) / previous track (left). |
 | Top-left corner | double-tap | Dark mode |
@@ -76,6 +76,7 @@ Requires macOS 13 or later. Universal: Apple Silicon and Intel.
 | --- | --- | --- |
 | Accessibility | Keep the pointer still, hold tap-to-click clicks in corners, move windows | Edges still work; the pointer is warped back instead, and windows can't move |
 | Automation (System Events) | The Dark mode corner | Asked the first time you use it |
+| Automation (Spotify) | Volume slides while Spotify plays | Asked the first time; without it the slide changes the Mac's volume |
 
 Bevel has no network code, collects nothing and stores only its settings (in `~/Library/Preferences/io.github.tomserowka.bevel.plist`).
 
