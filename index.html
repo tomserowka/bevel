@@ -55,10 +55,6 @@
 html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; background: var(--night); }
 body {
   margin: 0;
-  background:
-    radial-gradient(60rem 40rem at 85% -10%, rgba(138,108,255,.16), transparent 70%),
-    radial-gradient(50rem 36rem at -10% 30rem, rgba(255,94,138,.10), transparent 70%),
-    var(--night);
   color: var(--text);
   font-family: "Poppins", system-ui, sans-serif;
   font-size: 1rem;
@@ -119,14 +115,18 @@ button { font: inherit; color: inherit; }
 
 /* Sticky bar */
 .bar {
-  position: fixed; inset: 0 0 auto; z-index: 20;
-  background: rgba(14,16,34,.78); backdrop-filter: saturate(1.5) blur(16px); -webkit-backdrop-filter: saturate(1.5) blur(16px);
-  transform: translateY(-110%); transition: transform .3s ease;
+  position: fixed; top: 12px; left: 50%; z-index: 20; width: min(760px, calc(100% - 24px)); border-radius: 999px;
+  background: rgba(20,22,48,.5); backdrop-filter: blur(22px) saturate(1.8); -webkit-backdrop-filter: blur(22px) saturate(1.8);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.22), inset 0 0 0 1px rgba(255,255,255,.1), 0 20px 50px -20px rgba(0,0,0,.8);
+  transform: translate(-50%, -160%); transition: transform .5s cubic-bezier(.2,.9,.25,1.15);
 }
-.bar::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 1px; background: var(--neon); opacity: .6; box-shadow: var(--glow-soft); }
-.bar.on { transform: none; }
-.bar .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; height: 62px; }
-.bar .btn { min-height: 40px; padding: 8px 18px; font-size: .95rem; }
+.bar.on { transform: translate(-50%, 0); }
+.bar .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; height: 58px; padding: 0 7px 0 14px; }
+.bar .btn { min-height: 44px; padding: 8px 18px; font-size: .95rem; }
+.bar-links { display: flex; gap: 4px; margin-left: auto; font-size: .92rem; }
+.bar-links a { padding: 10px 12px; border-radius: 999px; text-decoration: none; color: var(--text-soft); transition: background-color .2s ease, color .2s ease; }
+.bar-links a:hover { color: var(--text); background: rgba(255,255,255,.08); }
+@media (max-width: 620px) { .bar-links { display: none; } }
 
 /* Hero */
 .hero { position: relative; padding: 22px 0 72px; overflow: hidden; }
@@ -440,15 +440,6 @@ h3 { font-size: 1.2rem; letter-spacing: -.01em; margin: 0 0 6px; line-height: 1.
 .bar-names { display: flex; gap: 3cqw; margin-top: 1.4cqw; font-size: 1.9cqw; color: #4b5078; }
 .bar-names span { flex: 1; text-align: center; }
 
-/* Mouse + windows */
-.duo-cards { display: grid; gap: 24px; }
-@media (min-width: 860px) { .duo-cards { grid-template-columns: 1fr 1fr; } }
-.card { padding: 32px; }
-.card h3 { font-size: 1.5rem; letter-spacing: -.02em; margin-bottom: 18px; }
-.mouse-row { display: flex; gap: 28px; align-items: center; }
-.mouse-row svg { width: 120px; flex: none; overflow: visible; }
-@media (max-width: 480px) { .mouse-row { flex-direction: column; align-items: flex-start; } }
-
 /* Compare */
 .compare { width: 100%; border-collapse: separate; border-spacing: 0; border-radius: 24px; overflow: hidden; background: var(--surface); box-shadow: inset 0 0 0 1px var(--hair); }
 .compare th, .compare td { padding: 18px 20px; text-align: left; vertical-align: top; border-bottom: 1px solid var(--hair); }
@@ -472,18 +463,6 @@ h3 { font-size: 1.2rem; letter-spacing: -.01em; margin: 0 0 6px; line-height: 1.
   .compare tbody th { padding-top: 16px; }
   .compare td:last-child { background: none; padding-bottom: 16px; }
 }
-
-/* Privacy */
-.private { margin-top: 120px; padding: 72px 0; position: relative; background: linear-gradient(180deg, transparent, rgba(42,47,107,.25), transparent); }
-.private::before, .private::after { content: ""; position: absolute; left: 0; right: 0; height: 1px; background: var(--neon); opacity: .55; box-shadow: var(--glow-soft); }
-.private::before { top: 0; } .private::after { bottom: 0; }
-.private-grid { display: grid; gap: 24px 56px; align-items: center; }
-@media (min-width: 860px) { .private-grid { grid-template-columns: 1.1fr 1fr; } }
-.private h2 { margin: 0; }
-.private p { margin: 0 0 18px; color: var(--text-soft); font-size: 1.12rem; max-width: 30em; }
-.private ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 10px; }
-.private li { display: flex; gap: 12px; align-items: center; font-weight: 600; }
-.private li svg { width: 22px; height: 22px; flex: none; color: var(--rose); filter: drop-shadow(0 0 6px rgba(255,94,138,.6)); }
 
 /* Install */
 .steps { list-style: none; margin: 0; padding: 0; counter-reset: s; display: grid; gap: 28px; }
@@ -531,10 +510,180 @@ footer nav { display: flex; flex-wrap: wrap; gap: 20px; }
 footer a { text-decoration: none; }
 footer a:hover { color: var(--text); }
 
+/* ---------- Glass ---------- */
+/* Slow aurora behind everything, with film grain; glass panes tint it, catch a rim of light and follow the pointer. */
+.aurora { position: fixed; inset: 0; z-index: -1; overflow: hidden; pointer-events: none; }
+.aurora i { position: absolute; border-radius: 50%; will-change: transform; animation: drift 38s ease-in-out infinite alternate; }
+.aurora i:nth-child(1) { width: 62vmax; height: 62vmax; left: -18vmax; top: -24vmax; background: radial-gradient(closest-side, rgba(138,108,255,.42), transparent); }
+.aurora i:nth-child(2) { width: 54vmax; height: 54vmax; right: -20vmax; top: 18vh; background: radial-gradient(closest-side, rgba(255,94,138,.30), transparent); animation-duration: 46s; animation-direction: alternate-reverse; }
+.aurora i:nth-child(3) { width: 46vmax; height: 46vmax; left: 22vw; bottom: -26vmax; background: radial-gradient(closest-side, rgba(255,179,71,.20), transparent); animation-duration: 52s; }
+@keyframes drift { 0% { transform: translate(0, 0) scale(1); } 50% { transform: translate(8vw, 6vh) scale(1.12); } 100% { transform: translate(-6vw, 10vh) scale(.94); } }
+body::after {
+  content: ""; position: fixed; inset: 0; z-index: 50; pointer-events: none; opacity: .07; mix-blend-mode: overlay;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+.panel, .compare, .zone, .tile, .steps li, .faq details, .closing-card {
+  --mx: -999px; --my: -999px;
+  border: 1px solid transparent;
+  background:
+    radial-gradient(380px circle at var(--mx) var(--my), rgba(255,255,255,.10), transparent 45%) padding-box,
+    linear-gradient(160deg, rgba(255,255,255,.09), rgba(255,255,255,.02) 42%, rgba(138,108,255,.06)) padding-box,
+    linear-gradient(rgba(18,20,44,.58), rgba(18,20,44,.58)) padding-box,
+    linear-gradient(150deg, rgba(255,255,255,.42), rgba(255,255,255,.07) 32%, rgba(255,255,255,.03) 64%, rgba(255,94,138,.4)) border-box;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.12), 0 30px 70px -40px rgba(0,0,0,.9);
+}
+
+/* Floating pill navigation in the hero. */
+.top nav { gap: 2px; padding: 5px; border-radius: 999px; background: rgba(255,255,255,.05); box-shadow: inset 0 1px 0 rgba(255,255,255,.16), inset 0 0 0 1px rgba(255,255,255,.08); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); }
+.top nav a { padding: 8px 14px; border-radius: 999px; transition: background-color .2s ease, color .2s ease; }
+.top nav a:hover { background: rgba(255,255,255,.08); }
+
+/* Headline */
+h1 { font-size: clamp(2.7rem, 7.6vw, 5.8rem); letter-spacing: -.045em; line-height: .98; }
+@media (min-width: 1100px) { h1 { font-size: clamp(3rem, 4.3vw, 4.4rem); } }
+.shine {
+  background: linear-gradient(90deg, var(--amber), var(--rose), var(--violet), var(--rose), var(--amber)) 0 0 / 200% 100%;
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+  filter: drop-shadow(0 0 22px rgba(255,94,138,.45)); animation: shine 7s linear infinite;
+}
+@keyframes shine { to { background-position: -200% 0; } }
+.hero-head > * { animation: rise .8s cubic-bezier(.2,.8,.2,1) both; }
+.hero-head > :nth-child(2) { animation-delay: .06s; } .hero-head > :nth-child(3) { animation-delay: .12s; }
+.hero-head > :nth-child(4) { animation-delay: .18s; } .hero-head > :nth-child(5) { animation-delay: .24s; }
+.hero-head > :nth-child(n+6) { animation-delay: .3s; }
+.stage { animation: rise 1s .2s cubic-bezier(.2,.8,.2,1) both; }
+@keyframes rise { from { opacity: 0; transform: translateY(24px); filter: blur(6px); } }
+
+/* Buttons: a sweep of light across the neon, glass for the outline. */
+.btn-neon { position: relative; overflow: hidden; isolation: isolate; }
+.btn-neon::after { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(105deg, transparent 35%, rgba(255,255,255,.55) 50%, transparent 65%); transform: translateX(-120%); transition: transform .7s ease; }
+.btn-neon:hover::after { transform: translateX(120%); }
+.btn-neon:hover { transform: translateY(-2px); }
+.btn-line { background: rgba(255,255,255,.05); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); box-shadow: inset 0 1px 0 rgba(255,255,255,.2), inset 0 0 0 1px rgba(255,255,255,.16); }
+.btn-line:hover { background: rgba(255,255,255,.1); box-shadow: inset 0 1px 0 rgba(255,255,255,.3), inset 0 0 0 1px rgba(255,255,255,.3); }
+.news { background: rgba(255,255,255,.05); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); box-shadow: inset 0 1px 0 rgba(255,255,255,.16), inset 0 0 0 1px rgba(255,255,255,.08); }
+.tries li { background: rgba(255,255,255,.04); box-shadow: inset 0 1px 0 rgba(255,255,255,.12), inset 0 0 0 1px rgba(255,255,255,.12); }
+
+/* Stickers around the demo */
+.stage { position: relative; }
+.stickers { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin: 36px 0 18px; }
+.sticker {
+  display: inline-flex; align-items: center; gap: 6px; padding: 7px 14px; border-radius: 999px;
+  font-size: .86rem; font-weight: 700; letter-spacing: -.01em; white-space: nowrap;
+  background: rgba(30,32,64,.55); backdrop-filter: blur(18px) saturate(1.6); -webkit-backdrop-filter: blur(18px) saturate(1.6);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.3), inset 0 0 0 1px rgba(255,255,255,.14), 0 10px 30px -10px rgba(0,0,0,.7);
+}
+.sticker svg { width: 14px; height: 14px; fill: var(--amber); }
+.sticker.s1 { rotate: -5deg; }
+.sticker.s2 { rotate: 3deg; color: #fff; background: var(--neon); box-shadow: 0 10px 30px -8px rgba(255,94,138,.7), inset 0 1px 0 rgba(255,255,255,.45); }
+.sticker.s3 { rotate: -2deg; }
+@media (min-width: 1100px) {
+  .stickers { display: block; margin: 0; }
+  .sticker { position: absolute; z-index: 3; animation: bob 6s ease-in-out infinite; }
+  .sticker.s1 { left: -10px; top: 6%; }
+  .sticker.s2 { right: -14px; top: 30%; animation-delay: -2s; }
+  .sticker.s3 { left: 4%; top: 52%; animation-delay: -4s; }
+}
+@keyframes bob { 50% { translate: 0 -8px; } }
+
+/* Ticker */
+.ticker-clip { overflow: clip; padding: 24px 0; margin-top: -16px; }
+.ticker { position: relative; margin: 0 -5vw; rotate: -1.6deg; overflow: hidden; padding: 16px 0; background: rgba(255,255,255,.04); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); box-shadow: inset 0 1px 0 rgba(255,255,255,.14), inset 0 -1px 0 rgba(255,255,255,.06); }
+.ticker::before, .ticker::after { content: ""; position: absolute; left: 0; right: 0; height: 1px; background: var(--neon); opacity: .7; box-shadow: var(--glow-soft); }
+.ticker::before { top: 0; } .ticker::after { bottom: 0; }
+.ticker-track { display: flex; align-items: center; gap: 22px; width: max-content; animation: tick 48s linear infinite; font-size: clamp(1.1rem, 2.2vw, 1.6rem); font-weight: 700; letter-spacing: -.02em; white-space: nowrap; padding-left: 22px; }
+.ticker-track svg { width: .8em; height: .8em; flex: none; fill: var(--rose); filter: drop-shadow(0 0 6px rgba(255,94,138,.8)); }
+.ticker-track span:nth-of-type(3n+2) { color: transparent; -webkit-text-stroke: 1.2px rgba(242,243,250,.75); }
+@keyframes tick { to { transform: translateX(-50%); } }
+
+/* Section labels and headings */
+.eyebrow {
+  display: inline-flex; align-items: center; gap: 8px; margin: 0 0 18px; padding: 6px 14px 6px 10px; border-radius: 999px;
+  font-size: .82rem; font-weight: 600; letter-spacing: .02em; color: var(--text);
+  background: rgba(255,255,255,.05); box-shadow: inset 0 1px 0 rgba(255,255,255,.16), inset 0 0 0 1px rgba(255,255,255,.1);
+}
+.eyebrow::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--neon); box-shadow: var(--glow-soft); }
+h2 { font-size: clamp(2.1rem, 5vw, 3.6rem); letter-spacing: -.04em; line-height: 1.04; }
+.feature h2 { font-size: clamp(2.1rem, 3.8vw, 3.1rem); }
+.zone { border-radius: 20px; padding: 16px 18px; }
+.zone h3 { margin-bottom: 4px; }
+
+/* Bento */
+.bento { display: grid; gap: 16px; grid-template-columns: minmax(0, 1fr); }
+.tile { border-radius: 28px; padding: 28px; }
+.tile h3 { font-size: 1.5rem; letter-spacing: -.02em; margin-bottom: 18px; }
+.tile p { margin: 0; color: var(--text-soft); }
+.t-stat { display: flex; flex-direction: column; justify-content: flex-end; gap: 8px; min-height: 200px; }
+.big {
+  font-size: clamp(4rem, 9vw, 6.5rem); line-height: .9; letter-spacing: -.06em; font-weight: 700;
+  background: var(--neon); -webkit-background-clip: text; background-clip: text; color: transparent; filter: drop-shadow(0 0 24px rgba(255,94,138,.35));
+}
+.t-priv h3 { font-size: clamp(1.6rem, 3vw, 2.2rem); line-height: 1.1; max-width: 14em; }
+.t-priv p { margin-bottom: 18px; max-width: 34em; }
+.checks { margin: 0; padding: 0; list-style: none; display: flex; flex-wrap: wrap; gap: 10px; }
+.checks li { display: flex; gap: 8px; align-items: center; font-weight: 600; font-size: .95rem; padding: 8px 14px 8px 10px; border-radius: 999px; background: rgba(255,255,255,.05); box-shadow: inset 0 0 0 1px rgba(255,255,255,.1); }
+.checks svg { width: 18px; height: 18px; flex: none; color: var(--rose); filter: drop-shadow(0 0 6px rgba(255,94,138,.6)); }
+.mouse-row { display: flex; gap: 28px; align-items: center; }
+.mouse-row svg { width: 120px; flex: none; overflow: visible; }
+@media (max-width: 480px) { .mouse-row { flex-direction: column; align-items: flex-start; } }
+@media (min-width: 720px) {
+  .bento { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-areas: "mouse mouse" "s1 s2" "win win" "priv priv"; }
+  .t-mouse { grid-area: mouse; } .t-stat:nth-of-type(2) { grid-area: s1; } .t-stat:nth-of-type(3) { grid-area: s2; } .t-win { grid-area: win; } .t-priv { grid-area: priv; }
+}
+@media (min-width: 1040px) {
+  .bento { grid-template-columns: repeat(4, minmax(0, 1fr)); grid-template-areas: "mouse mouse s1 s2" "mouse mouse win win" "priv priv win win"; }
+}
+
+/* Lists and cards */
+.compare { border-radius: 28px; }
+.compare thead th { background: rgba(255,255,255,.03); }
+.steps li { border-radius: 24px; padding: 22px; }
+.faq { display: grid; gap: 10px; }
+.faq h2 { margin-bottom: 18px; }
+.faq details { border-radius: 20px; padding: 0 22px; }
+.faq details[open]::before { left: -1px; }
+.faq summary { padding-right: 32px; }
+.panel { border-radius: 28px; }
+
+/* Closing: a rim of neon that turns slowly. */
+@property --spin { syntax: "<angle>"; inherits: false; initial-value: 0deg; }
+.closing-card {
+  border-radius: 36px; border-width: 2px;
+  background:
+    radial-gradient(60% 90% at 50% 120%, rgba(255,94,138,.35), transparent 70%) padding-box,
+    linear-gradient(160deg, rgba(255,255,255,.08), rgba(255,255,255,.02) 45%) padding-box,
+    linear-gradient(rgba(18,20,44,.7), rgba(18,20,44,.7)) padding-box,
+    conic-gradient(from var(--spin), var(--amber), var(--rose), var(--violet), rgba(255,255,255,.1), var(--amber)) border-box;
+  box-shadow: 0 0 80px -20px rgba(255,94,138,.5), inset 0 1px 0 rgba(255,255,255,.12);
+  animation: spin 9s linear infinite;
+}
+.closing-card::before { display: none; }
+.closing-card h2 { font-size: clamp(2.3rem, 6vw, 4.2rem); }
+@keyframes spin { to { --spin: 360deg; } }
+
+/* Scroll reveal, where the browser drives it from scroll position. */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    main section .wrap > *, .tile, .zone, .steps li {
+      animation: reveal linear both; animation-timeline: view(); animation-range: entry 0% cover 22%;
+    }
+  }
+}
+@keyframes reveal { from { opacity: 0; transform: translateY(34px) scale(.98); } }
+
+@media (prefers-reduced-transparency: reduce) {
+  .bar, .top nav, .sticker, .ticker, .btn-line, .news { backdrop-filter: none; -webkit-backdrop-filter: none; background-color: var(--surface); }
+  .panel, .compare, .zone, .tile, .steps li, .faq details, .closing-card { background: var(--surface); }
+  body::after { display: none; }
+}
+@media (prefers-contrast: more) {
+  .panel, .compare, .zone, .tile, .steps li, .faq details { box-shadow: inset 0 0 0 1px rgba(255,255,255,.5); }
+}
+
 @media (max-width: 560px) {
   .top nav a.opt { display: none; }
   section { padding-top: 88px; }
-  .card { padding: 24px; }
   .panel { padding: 14px; }
   .bar .brand span { display: none; }
   .faq details[open]::before { left: -10px; }
@@ -542,11 +691,13 @@ footer a:hover { color: var(--text); }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after { transition: none !important; }
+  .aurora i, .shine, .hero-head > *, .stage, .sticker, .ticker-track, .closing-card { animation: none !important; }
 }
 </style>
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
+<div class="aurora" aria-hidden="true"><i></i><i></i><i></i></div>
 
 <div class="edge-light l" id="light-l" aria-hidden="true"><i></i></div>
 <div class="edge-light r" id="light-r" aria-hidden="true"><i></i></div>
@@ -554,6 +705,7 @@ footer a:hover { color: var(--text); }
 <div class="bar" id="bar" aria-hidden="true">
   <div class="wrap">
     <a class="brand" href="#top" tabindex="-1"><img src="icon-128.png" alt="" width="30" height="30"><span>Bevel</span></a>
+    <nav class="bar-links" aria-label="Sections"><a href="#zones" tabindex="-1">Gestures</a><a href="#extras" tabindex="-1">Features</a><a href="#faq" tabindex="-1">FAQ</a></nav>
     <a class="btn btn-neon" data-dl href="https://github.com/tomserowka/bevel/releases/latest" tabindex="-1">Download for Mac</a>
   </div>
 </div>
@@ -564,7 +716,7 @@ footer a:hover { color: var(--text); }
       <a class="brand" href="#top"><img src="icon-128.png" alt="" width="34" height="34">Bevel</a>
       <nav aria-label="Page">
         <a class="opt" href="#zones">Gestures</a>
-        <a class="opt" href="#screens">Features</a>
+        <a class="opt" href="#extras">Features</a>
         <a class="opt" href="#faq">FAQ</a>
         <a href="https://github.com/tomserowka/bevel">GitHub</a>
       </nav>
@@ -573,7 +725,7 @@ footer a:hover { color: var(--text); }
     <div class="hero-main">
     <div class="hero-head">
       <a class="news" id="news" hidden href="https://github.com/tomserowka/bevel/releases/latest"><b>New</b><span>What's new in this version</span></a>
-      <h1>Your trackpad has edges. Put them to work.</h1>
+      <h1>Your trackpad has <span class="shine">edges</span>. Put them to work.</h1>
       <span class="neon-rule" aria-hidden="true"></span>
       <p class="lede">Slide along an edge for the brightness of the screen you're looking at, or for volume. Swipe for the next track. Double-tap a corner for dark mode. The rest of the trackpad works exactly as before.</p>
       <div class="ctas">
@@ -591,6 +743,11 @@ footer a:hover { color: var(--text); }
     </div>
 
     <div class="stage">
+      <div class="stickers" aria-hidden="true">
+        <span class="sticker s1"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1.5c.6 5.6 4.9 9.9 10.5 10.5-5.6.6-9.9 4.9-10.5 10.5C11.4 16.9 7.1 12.6 1.5 12 7.1 11.4 11.4 7.1 12 1.5z"/></svg>free</span>
+        <span class="sticker s2">zero telemetry</span>
+        <span class="sticker s3">edges &gt; keys</span>
+      </div>
       <div class="laptop">
         <div class="lid">
           <div class="screen dark" id="screen" aria-hidden="true">
@@ -631,9 +788,12 @@ footer a:hover { color: var(--text); }
   </div>
 </header>
 
+<div class="ticker-clip" aria-hidden="true"><div class="ticker"><div class="ticker-track"><span>Brightness</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1.5c.6 5.6 4.9 9.9 10.5 10.5-5.6.6-9.9 4.9-10.5 10.5C11.4 16.9 7.1 12.6 1.5 12 7.1 11.4 11.4 7.1 12 1.5z"/></svg><span>Volume</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1.5c.6 5.6 4.9 9.9 10.5 10.5-5.6.6-9.9 4.9-10.5 10.5C11.4 16.9 7.1 12.6 1.5 12 7.1 11.4 11.4 7.1 12 1.5z"/></svg><span>Next track</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1.5c.6 5.6 4.9 9.9 10.5 10.5-5.6.6-9.9 4.9-10.5 10.5C11.4 16.9 7.1 12.6 1.5 12 7.1 11.4 11.4 7.1 12 1.5z"/></svg><span>Dark mode</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1.5c.6 5.6 4.9 9.9 10.5 10.5-5.6.6-9.9 4.9-10.5 10.5C11.4 16.9 7.1 12.6 1.5 12 7.1 11.4 11.4 7.1 12 1.5z"/></svg><span>Lock screen</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1.5c.6 5.6 4.9 9.9 10.5 10.5-5.6.6-9.9 4.9-10.5 10.5C11.4 16.9 7.1 12.6 1.5 12 7.1 11.4 11.4 7.1 12 1.5z"/></svg><span>Mute</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1.5c.6 5.6 4.9 9.9 10.5 10.5-5.6.6-9.9 4.9-10.5 10.5C11.4 16.9 7.1 12.6 1.5 12 7.1 11.4 11.4 7.1 12 1.5z"/></svg><span>Draw on screen</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1.5c.6 5.6 4.9 9.9 10.5 10.5-5.6.6-9.9 4.9-10.5 10.5C11.4 16.9 7.1 12.6 1.5 12 7.1 11.4 11.4 7.1 12 1.5z"/></svg><span>Tile windows</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1.5c.6 5.6 4.9 9.9 10.5 10.5-5.6.6-9.9 4.9-10.5 10.5C11.4 16.9 7.1 12.6 1.5 12 7.1 11.4 11.4 7.1 12 1.5z"/></svg><span>App switcher</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1.5c.6 5.6 4.9 9.9 10.5 10.5-5.6.6-9.9 4.9-10.5 10.5C11.4 16.9 7.1 12.6 1.5 12 7.1 11.4 11.4 7.1 12 1.5z"/></svg><span>Sound output</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1.5c.6 5.6 4.9 9.9 10.5 10.5-5.6.6-9.9 4.9-10.5 10.5C11.4 16.9 7.1 12.6 1.5 12 7.1 11.4 11.4 7.1 12 1.5z"/></svg><span>Warmth</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1.5c.6 5.6 4.9 9.9 10.5 10.5-5.6.6-9.9 4.9-10.5 10.5C11.4 16.9 7.1 12.6 1.5 12 7.1 11.4 11.4 7.1 12 1.5z"/></svg><span>Magic Mouse</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1.5c.6 5.6 4.9 9.9 10.5 10.5-5.6.6-9.9 4.9-10.5 10.5C11.4 16.9 7.1 12.6 1.5 12 7.1 11.4 11.4 7.1 12 1.5z"/></svg><span>Brightness</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1.5c.6 5.6 4.9 9.9 10.5 10.5-5.6.6-9.9 4.9-10.5 10.5C11.4 16.9 7.1 12.6 1.5 12 7.1 11.4 11.4 7.1 12 1.5z"/></svg><span>Volume</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1.5c.6 5.6 4.9 9.9 10.5 10.5-5.6.6-9.9 4.9-10.5 10.5C11.4 16.9 7.1 12.6 1.5 12 7.1 11.4 11.4 7.1 12 1.5z"/></svg><span>Next track</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1.5c.6 5.6 4.9 9.9 10.5 10.5-5.6.6-9.9 4.9-10.5 10.5C11.4 16.9 7.1 12.6 1.5 12 7.1 11.4 11.4 7.1 12 1.5z"/></svg><span>Dark mode</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1.5c.6 5.6 4.9 9.9 10.5 10.5-5.6.6-9.9 4.9-10.5 10.5C11.4 16.9 7.1 12.6 1.5 12 7.1 11.4 11.4 7.1 12 1.5z"/></svg><span>Lock screen</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1.5c.6 5.6 4.9 9.9 10.5 10.5-5.6.6-9.9 4.9-10.5 10.5C11.4 16.9 7.1 12.6 1.5 12 7.1 11.4 11.4 7.1 12 1.5z"/></svg><span>Mute</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1.5c.6 5.6 4.9 9.9 10.5 10.5-5.6.6-9.9 4.9-10.5 10.5C11.4 16.9 7.1 12.6 1.5 12 7.1 11.4 11.4 7.1 12 1.5z"/></svg><span>Draw on screen</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1.5c.6 5.6 4.9 9.9 10.5 10.5-5.6.6-9.9 4.9-10.5 10.5C11.4 16.9 7.1 12.6 1.5 12 7.1 11.4 11.4 7.1 12 1.5z"/></svg><span>Tile windows</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1.5c.6 5.6 4.9 9.9 10.5 10.5-5.6.6-9.9 4.9-10.5 10.5C11.4 16.9 7.1 12.6 1.5 12 7.1 11.4 11.4 7.1 12 1.5z"/></svg><span>App switcher</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1.5c.6 5.6 4.9 9.9 10.5 10.5-5.6.6-9.9 4.9-10.5 10.5C11.4 16.9 7.1 12.6 1.5 12 7.1 11.4 11.4 7.1 12 1.5z"/></svg><span>Sound output</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1.5c.6 5.6 4.9 9.9 10.5 10.5-5.6.6-9.9 4.9-10.5 10.5C11.4 16.9 7.1 12.6 1.5 12 7.1 11.4 11.4 7.1 12 1.5z"/></svg><span>Warmth</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1.5c.6 5.6 4.9 9.9 10.5 10.5-5.6.6-9.9 4.9-10.5 10.5C11.4 16.9 7.1 12.6 1.5 12 7.1 11.4 11.4 7.1 12 1.5z"/></svg><span>Magic Mouse</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1.5c.6 5.6 4.9 9.9 10.5 10.5-5.6.6-9.9 4.9-10.5 10.5C11.4 16.9 7.1 12.6 1.5 12 7.1 11.4 11.4 7.1 12 1.5z"/></svg></div></div></div>
+
 <main id="main">
   <section id="zones">
     <div class="wrap">
+      <p class="eyebrow">the gestures</p>
       <h2>Four edges, four corners, no new keys to learn</h2>
       <p class="sub">A touch that starts at the very edge becomes a control within a millimetre or two. Everywhere else, the trackpad is just a trackpad.</p>
       <div class="map">
@@ -654,7 +814,8 @@ footer a:hover { color: var(--text); }
   <section id="screens">
     <div class="wrap feature">
       <div>
-        <h2>The screen you're looking at, and only that one</h2>
+        <p class="eyebrow">every screen</p>
+      <h2>The screen you're looking at, and only that one</h2>
         <p class="sub">Most brightness tools change one display, or all of them. Bevel changes the one under your pointer.</p>
         <ul class="ticks">
           <li><b>External monitors too.</b> Most take brightness over DDC/CI, the way their own buttons do. Anything else is dimmed in software.</li>
@@ -689,7 +850,8 @@ footer a:hover { color: var(--text); }
   <section id="draw">
     <div class="wrap feature flip">
       <div>
-        <h2>Point things out, right on the screen</h2>
+        <p class="eyebrow">draw on screen</p>
+      <h2>Point things out, right on the screen</h2>
         <p class="sub">Hold a shortcut and draw over anything, in a call or a recording. Let go and it's gone.</p>
         <ul class="ticks">
           <li><b>Arrow, pen, ellipse, rectangle and numbered markers</b>, from the toolbar or the keys 1 to 5.</li>
@@ -729,12 +891,13 @@ footer a:hover { color: var(--text); }
     </div>
   </section>
 
-  <section>
+  <section id="extras">
     <div class="wrap">
+      <p class="eyebrow">and more</p>
       <h2>More where that came from</h2>
       <p class="sub">The Magic Mouse gets the trackpad's tricks, and windows and apps are a slide away.</p>
-      <div class="duo-cards">
-        <div class="panel card">
+      <div class="bento">
+        <div class="tile t-mouse">
           <h3>Magic Mouse included</h3>
           <div class="mouse-row">
             <svg viewBox="0 0 120 200" aria-hidden="true">
@@ -764,7 +927,15 @@ footer a:hover { color: var(--text); }
             </ul>
           </div>
         </div>
-        <div class="panel card">
+        <div class="tile t-stat">
+          <b class="big">8</b>
+          <p>controls on every trackpad and Magic Mouse: four edges, four corners.</p>
+        </div>
+        <div class="tile t-stat">
+          <b class="big">$0</b>
+          <p>Free to download. No account, no trial, no upsell.</p>
+        </div>
+        <div class="tile t-win">
           <h3>Windows and apps</h3>
           <ul class="ticks">
             <li><b>Maximise, restore or tile</b> the front window from a corner.</li>
@@ -775,12 +946,22 @@ footer a:hover { color: var(--text); }
             <li><b>Haptic ticks</b> as you slide, with a firmer one at halfway and at the ends.</li>
           </ul>
         </div>
+        <div class="tile t-priv">
+          <h3>It never talks to the internet.</h3>
+          <p>Bevel has no network code at all. It stores its settings on your Mac and nothing else.</p>
+          <ul class="checks">
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>No account, no sign-in</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>No analytics or crash reporting</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Every release ships with SHA-256 checksums</li>
+          </ul>
+        </div>
       </div>
     </div>
   </section>
 
   <section id="compare">
     <div class="wrap">
+      <p class="eyebrow">vs. macOS</p>
       <h2>What macOS leaves out</h2>
       <p class="sub">The Mac's own controls stop at the keyboard and Apple's own screens. Bevel fills the gaps.</p>
       <table class="compare">
@@ -797,22 +978,9 @@ footer a:hover { color: var(--text); }
     </div>
   </section>
 
-  <div class="private">
-    <div class="wrap private-grid">
-      <h2>It never talks to the internet.</h2>
-      <div>
-        <p>Bevel has no network code at all. It stores its settings on your Mac and nothing else.</p>
-        <ul>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>No account, no sign-in</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>No analytics or crash reporting</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Every release ships with SHA-256 checksums</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-
   <section id="install">
     <div class="wrap">
+      <p class="eyebrow">get it</p>
       <h2>Install in a minute</h2>
       <p class="sub">Bevel lives in your menu bar. Open it again from Applications whenever you want its settings.</p>
       <ol class="steps">
@@ -827,6 +995,7 @@ footer a:hover { color: var(--text); }
 
   <section id="faq">
     <div class="wrap faq">
+      <p class="eyebrow">faq</p>
       <h2>Questions</h2>
       <details>
         <summary>macOS warns me before opening it. Is that normal?</summary>
@@ -1245,6 +1414,18 @@ footer a:hover { color: var(--text); }
     bar.setAttribute("aria-hidden", !on);
     bar.querySelectorAll("a").forEach(a => a.tabIndex = on ? 0 : -1);
   }).observe(document.querySelector(".hero-head .ctas"));
+
+  /* ---------- Light that follows the pointer on glass ---------- */
+  if (matchMedia("(hover: hover)").matches) {
+    const glass = ".panel, .compare, .zone, .tile, .steps li, .faq details";
+    document.addEventListener("pointermove", e => {
+      const el = e.target.closest?.(glass);
+      if (!el) return;
+      const r = el.getBoundingClientRect();
+      el.style.setProperty("--mx", `${e.clientX - r.left}px`);
+      el.style.setProperty("--my", `${e.clientY - r.top}px`);
+    }, { passive: true });
+  }
 
   /* ---------- Phone visitors ---------- */
   // iPads report a Mac user agent but have touch points.
