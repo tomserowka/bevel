@@ -24,8 +24,9 @@ Slide a finger along an edge, or double-tap a corner, of the built-in trackpad, 
 | Bottom-left corner | double-tap | Lock screen |
 | Bottom-right corner | double-tap | Play / pause (or run any Shortcut) |
 | Magic Mouse front edge | slide | Volume |
-| Magic Mouse left side | slide | Brightness |
-| Magic Mouse front corners | double-tap | Nothing until you pick an action |
+| Magic Mouse left side | slide | Brightness. Two fingers: warmth. |
+| Magic Mouse right side, back edge | slide | Nothing until you pick an action |
+| Magic Mouse corners (front and back) | double-tap | Nothing until you pick an action |
 | Magic Mouse, anywhere | tap | Off until you turn on **Tap to click**: one finger clicks, two fingers right-click |
 
 Every zone can be reassigned in **Settings**, which lists each zone with its own action picker under a picture of the device that also shows your fingers live.
@@ -42,7 +43,7 @@ Screens:
 Windows and apps:
 
 - **Corner actions for windows:** maximise or restore the front window, or tile it to that corner's quarter of the screen.
-- **App switcher on an edge:** hold a finger still to pick from your recent apps, slide to choose, lift to switch.
+- **App switcher on an edge:** hold a finger still to pick from your recent apps, slide to choose, lift to switch. On the Magic Mouse, turn on **Hold to pick** first.
 - **Per-app setups:** give an app its own actions, say Seek on the bottom edge in your video player.
 
 Sound and feel:
